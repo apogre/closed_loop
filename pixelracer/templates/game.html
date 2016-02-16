@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>pixel race</title>
+    <meta name='description' content='PIXEL RACE GAME FOR FUN'/>
+    <meta name='keywords' content='html5, game, impactjs, pixel, race, racing'/>
+    <meta name="author" content="Nedim Arabacı"/>
+    <meta name="copyright" content="&copy; Copyright 2014"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='webfonts/font.css')}}"/>
+    <script type="text/javascript" src="{{url_for('static', filename='js/store.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-1.10.2.min.js')}}"></script>
+
+    <script type="text/javascript">
+        var Clay = Clay || {};
+        Clay.gameKey = "pixelrace";
+        Clay.readyFunctions = [];
+        Clay.ready = function (fn) {
+            Clay.readyFunctions.push(fn);
+        };
+        (function () {
+            var clay = document.createElement("script");
+            clay.async = true;
+            clay.src = ( "https:" == document.location.protocol ? "https://" : "http://" ) + "clay.io/api/api.js";
+            var tag = document.getElementsByTagName("script")[0];
+            tag.parentNode.insertBefore(clay, tag);
+        })();
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+			$("#speed_val").html($("#speed").val());
+            var username = store.get('username');
+            var $userinfo = $('.userinfo');
+
+            if (typeof username == 'undefined') {
+                $userinfo.show();
+            } else {
+                $('.loggeduser').html('Logged as: ' + username).fadeIn();
+            }
+
+            $('#name-submit').on('click', function(e) {
+                var name = $('input#name').val();
+                name = (name.length < 1) ? 'guest' : name;
+                if (name == 'guest')
+                    name += '_' + (new Date()).getTime();
+
+                store.set('username', name);
+                $userinfo.hide();
+                $('.loggeduser').html('Logged as: ' + store.get('username')).fadeIn();
+                e.preventDefault();
+                return false;
+            });
+
+            $('#guest').on('click', function(e) {
+                store.set('username', 'guest_'+(new Date()).getTime());
+                $userinfo.hide();
+                $('.loggeduser').html('Logged as: '+ store.get('username')).fadeIn();
+                e.preventDefault();
+                return false;
+            });
+
+            var musicState = store.get('musicState') || 'on';
+            var soundState = store.get('soundState') || 'on';
+
+            var $musicStateContainer = $('.volumes .music .state');
+            var $soundStateContainer = $('.volumes .sound .state');
+
+            $musicStateContainer.html(musicState);
+            $soundStateContainer.html(soundState);
+
+            console.log(musicState, soundState);
+
+            $('.music').on('click', function(e) {
+                var musicState = store.get('musicState') || 'on';
+                if (musicState == 'on') {
+                    store.set('musicState', 'off');
+                    $musicStateContainer.html('off');
+                } else {
+                    store.set('musicState', 'on');
+                    $musicStateContainer.html('on');
+                }
+
+                e.preventDefault();
+                return false;
+            });
+
+            $('.sound').on('click', function(e) {
+                var soundState = store.get('soundState') || 'on';
+                if (soundState == 'on') {
+                    store.set('soundState', 'off');
+                    $soundStateContainer.html('off');
+                } else {
+                    store.set('soundState', 'on');
+                    $soundStateContainer.html('on');
+                }
+
+                e.preventDefault();
+                return false;
+            });
+
+        });
+    </script>
+
+    <style type="text/css">
+        html, body {
+            background-color: #000;
+            color: #fff;
+            font-family: helvetica, arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 12pt;
+        }
+
+        #frame {
+            width: 320px;
+            height: 600px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            -webkit-perspective: 100px;
+            -moz-perspective: 100px;
+            -o-perspective: 100px;
+            -ms-perspective: 100px;
+            perspective: 100px;
+            -webkit-perspective-origin: 100%, 100%;
+            -moz-perspective-origin: 100%, 100%;
+            -o-perspective-origin: 100%, 100%;
+            -ms-perspective-origin: 100%, 100%;
+            perspective-origin: 100%, 100%;
+            -webkit-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            -moz-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            -o-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            -ms-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+        }
+
+        #canvas {
+            border: 3px solid #dedede;
+            -webkit-perspective: 100px;
+            -moz-perspective: 100px;
+            -o-perspective: 100px;
+            -ms-perspective: 100px;
+            perspective: 100px;
+            -webkit-perspective-origin: 100%, 100%;
+            -moz-perspective-origin: 100%, 100%;
+            -o-perspective-origin: 100%, 100%;
+            -ms-perspective-origin: 100%, 100%;
+            perspective-origin: 100%, 100%;
+            -webkit-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            -moz-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            -o-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            -ms-transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+            transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+        }
+
+        .clay-notification {
+            border: 1px solid #000 !important;
+            background-color: #000 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .clay-notification-header, .clay-notification-content {
+            border-radius: 0 !important;
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+        }
+
+        a.leaderboard {
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+            display: inline-block;
+            padding: 10px 20px;
+            position: fixed;
+            z-index: 1237223;
+            top: 0;
+            left: 0;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .volumes {
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+            display: inline-block;
+            padding: 10px 20px;
+            position: fixed;
+            z-index: 1237223;
+            top: 0;
+            right: 0;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .volumes .music:hover, .volumes .sound:hover {
+            color: yellow;
+            cursor: pointer;
+        }
+
+        .userinfo {
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+            background-color: rgba(255,255,255,1);
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 1237123;
+            text-align: center;
+            color: #777;
+            display: none
+        }
+
+        .loggeduser {
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+            position: fixed;
+            z-index: 1237123;
+            text-align: center;
+            display: none;
+            height: 30px;
+            border-bottom: 1px solid #fff;
+            width: 100%;
+            top: 5px;
+            padding-top: 5px;
+        }
+
+        .userinfo .form {
+            padding-top: 40px;
+        }
+
+        .userinfo input#name {
+            border: 2px solid #777;
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+            font-size: 30px;
+            line-height: 30px;
+            padding: 10px 30px 6px 30px;
+            text-align: center;
+        }
+
+        .userinfo input#name-submit {
+            margin-top: 20px;
+            display: inline-block;
+            border: 1px solid #F35064;
+            padding: 10px 24px 7px 24px;
+            text-decoration: none;
+            background-color: #F35064;
+            color: #fff;
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+            cursor: pointer;
+        }
+
+        .userinfo input#name-submit:hover {
+            border: 1px solid #F35064;
+            color: #F35064;
+            background-color: #fff;
+        }
+
+        .userinfo input#guest {
+            font-family: BitBold, Helvetica, Arial, sans-serif !important;
+            margin-top: 20px;
+            display: inline-block;
+            border: 1px solid #dedede;
+            background-color: #efefef;
+            padding: 10px 24px 7px 24px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .userinfo input#guest:hover {
+            background-color: #fff;
+        }
+
+        span.or {
+            font-size: 10px
+        }
+
+    </style>
+	<script src="{{url_for('static', filename='js/game.js')}}"></script>
+    <script>
+		function showValue(self)
+		{
+		 $("#speed_val").html(self.value);
+		}
+
+    </script>
+</head>
+<body>
+<div class="loggeduser"></div>
+<div class="userinfo">
+    <div class="form">
+        <h2>Username for Testing</h2>
+        <input id="name" type="text" value="" placeholder="Username"/><br>
+        <input type="button" id="name-submit" value="submit"/>
+    </div>
+</div>
+
+<a class="leaderboard" href="#">Speed: <span id="speed_val" value="{{speed_car}}"> </span><input id="speed" type="range" min="30" max="200" step="10" value="{{speed_car}}" onchange=showValue(this) /></a>
+
+<div class="volumes">
+
+    <span class="music">
+        MUSIC: <span class="state"></span>
+    </span>
+
+    <span class="sound">
+        SOUND: <span class="state"></span>
+    </span>
+
+</div>
+
+<div id="frame">
+    <canvas id="canvas"></canvas>
+</div>
+
+
+
+</body>
+</html>

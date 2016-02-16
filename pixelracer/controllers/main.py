@@ -11,7 +11,12 @@ main = Blueprint('main', __name__)
 @main.route('/')
 @cache.cached(timeout=1000)
 def home():
-    return render_template('index.html')
+    return render_template('game.html', speed_car=40)
+
+@main.route('/get_speed')
+def speed_val():
+	a = open("speed_val", "rb")
+	return a.read()
 
 
 @main.route("/login", methods=["GET", "POST"])
