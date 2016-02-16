@@ -285,7 +285,17 @@
 		{
 		 $("#speed_val").html(self.value);
 		}
-
+		function update_speed(){
+			if(!game_paused){
+				$.get( "/get_speed", function( data ) {
+				  $( ".result" ).html( data );
+				  speed_now = parseInt(data);
+				  console.log(data);
+				});
+			}
+			setTimeout(update_speed, 1000);
+		}
+		update_speed();
     </script>
 </head>
 <body>

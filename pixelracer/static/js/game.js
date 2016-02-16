@@ -1,6 +1,7 @@
 /*! Built with IMPACT - impactjs.com */
 (function(window) {
 	speed_now = 0;
+	game_paused = false;
     "use strict";
     Number.prototype.map = function(istart, istop, ostart, ostop) {
         return ostart + (ostop - ostart) * ((this - istart) / (istop - istart));
@@ -2671,7 +2672,8 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
             }
             if (ig.input.pressed('esc')) {
                 this.isPaused = !this.isPaused;
-				this.gameover = true;
+				game_paused = !game_paused;
+				// this.gameover = true;
             }
             if (this.gameOver) {
 			    ig.system.setGame(PixelRaceGame);
@@ -2684,11 +2686,6 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
                 return;
             }
             if (!this.isPaused) {
-				$.get( "/get_speed", function( data ) {
-				  $( ".result" ).html( data );
-				  speed_now = parseInt(data);
-				});
-				console.log(speed_now);
 				this.speed =speed_now;
 /*                 if (this.speed < 200)
                     this.speed += (ig.system.tick * (150 / this.speed)) + 0.05; */
