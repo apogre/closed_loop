@@ -2555,6 +2555,7 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
             this.parent();
             if (this.pos.y > ig.system.height + 20) {
                 this.kill();
+				ig.game.score -= 1;
             }
         }
     });
