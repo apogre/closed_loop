@@ -2648,6 +2648,7 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
             ig.input.bind(ig.KEY.LEFT_ARROW, 'left');
             ig.input.bind(ig.KEY.RIGHT_ARROW, 'right');
             ig.input.bind(ig.KEY.ENTER, 'ok');
+			ig.input.bind(ig.KEY.ESC, 'esc');
             ig.input.bind(ig.KEY.P, 'pause');
             ig.music.add('static/media/loop.ogg');
             var musicState = store.get('musicState') || 'on';
@@ -2668,12 +2669,12 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
                 this.gameOver = false;
                 ig.system.setGame(PixelRaceGame);
             }
-            if (ig.input.pressed('pause')) {
+            if (ig.input.pressed('esc')) {
                 this.isPaused = !this.isPaused;
+				this.gameover = true;
             }
             if (this.gameOver) {
 			    ig.system.setGame(PixelRaceGame);
-
                 var that = this;
                 if (!that.isSubmitted) {
                     that.isSubmitted = true;
@@ -2757,6 +2758,8 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
         font: new ig.Font('static/media/04b03.font.png'),
         init: function() {
             ig.input.bind(ig.KEY.ENTER, 'ok');
+			ig.input.bind(ig.KEY.ESC, 'esc');
+
         },
         update: function() {
             if (ig.input.pressed('ok')) {
