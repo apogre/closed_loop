@@ -290,11 +290,26 @@
 				$.get( "/get_speed", function( data ) {
 				  $( ".result" ).html( data );
 				  speed_now = parseInt(data);
+				  $("#speed_val").val(data);
+				  $("#speed_val").html(data);
 				  console.log(data);
 				});
 			}
 			setTimeout(update_speed, 1000);
 		}
+		function send_score(score){
+			if(!game_paused){
+				$.get( "/send_score/"+String(score), function( data ) {
+				  $( ".result" ).html( data );
+				  if(data==="changed"){
+				      ig.game.score = 0;
+					  last_score = 0;
+				  }
+				});
+			}
+		}
+			last_score = 0;
+		send_score();
 		update_speed();
     </script>
 </head>

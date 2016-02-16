@@ -2556,6 +2556,7 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
             if (this.pos.y > ig.system.height + 20) {
                 this.kill();
 				ig.game.score -= 1;
+				send_score(ig.game.score);
             }
         }
     });
@@ -2603,6 +2604,7 @@ ig.module('pixel-race').requires('impact.game', 'impact.entity', 'impact.collisi
                     other.sound.play();
                 other.kill();
                 ig.game.score += 1;
+				send_score(ig.game.score);
             } else {
                 ig.game.gameOver = true;
                 soundState = store.get('soundState') || 'on';

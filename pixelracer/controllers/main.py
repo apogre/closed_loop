@@ -6,7 +6,7 @@ from pixelracer.forms import LoginForm
 from pixelracer.models import User
 
 main = Blueprint('main', __name__)
-
+speed = 70
 
 @main.route('/')
 @cache.cached(timeout=1000)
@@ -15,9 +15,21 @@ def home():
 
 @main.route('/get_speed')
 def speed_val():
-	a = open("speed_val", "rb")
-	return a.read()
-
+	# a = open("speed_val", "rb")
+	return str(speed)
+	
+@main.route('/send_score/<score>')
+def send_score(score):
+	global speed
+	if (int(score) >= 5):
+		speed = speed+10
+		return "changed"
+	elif (int(score)<=-5):
+		speed = speed - 10
+		return "changed"
+	else:
+		speed=speed
+		return "done"
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
