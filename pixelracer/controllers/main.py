@@ -13,6 +13,11 @@ speed = 70
 def home():
     return render_template('game.html', speed_car=40)
 
+@main.route('/tetris')
+@cache.cached(timeout=1000)
+def tetris():
+    return render_template('tetris.html')
+	
 @main.route('/get_speed')
 def speed_val():
 	# a = open("speed_val", "rb")
