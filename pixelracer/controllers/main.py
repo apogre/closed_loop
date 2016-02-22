@@ -17,12 +17,12 @@ def home():
 @cache.cached(timeout=1000)
 def tetris():
     return render_template('tetris.html')
-	
+
 @main.route('/get_speed')
 def speed_val():
 	# a = open("speed_val", "rb")
 	return str(speed)
-	
+
 @main.route('/send_score/<score>')
 def send_score(score):
 	global speed
@@ -35,6 +35,11 @@ def send_score(score):
 	else:
 		speed=speed
 		return "done"
+
+@main.route('/send_tetris_score', methods=['GET'])
+def send_tetris_score():
+    print request.args.get('level')
+    return "done"
 
 @main.route("/login", methods=["GET", "POST"])
 def login():

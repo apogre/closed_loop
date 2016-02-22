@@ -8,6 +8,19 @@
 
 	<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 </head>
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery-1.10.2.min.js')}}"></script>
+<script>
+globscore = 0;
+globlevel=1;
+function send_score(){
+		$.get( "/send_tetris_score",{score: globscore, level: globlevel}, function( data ) {
+			$( ".result" ).html( data );
+			console.log("Data Sent");
+		});
+		setTimeout(send_score, 1000);
+}
+ send_score();
+</script>
 <body>
 <div id="tetris">
 	<canvas id="scene"></canvas>
@@ -15,7 +28,7 @@
 		<h1>Game Over !</h1>
 		<h3>Score: <span id="finalScore">0</span></h3>
 		<h2><a href="#" id="restart">Restart</a></h2>
-		
+
 	</div>
 	<div id="side">
 		<div id="info">
