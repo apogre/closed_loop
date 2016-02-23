@@ -3,8 +3,7 @@
 var utils = require('./utils.js');
 var consts = require('./consts.js');
 
-globscore = 0;
-globlevel=1;
+
 var lineColor =  consts.GRID_LINE_COLOR;
 
 var boxBorderColor = consts.BOX_BORDER_COLOR;
@@ -321,6 +320,7 @@ var checkGameOver = function(matrix){
 	var firstRow = matrix[0];
 	for(var i = 0;i<firstRow.length;i++){
 		if (firstRow[i]!==0){
+			gameover_check = true;
 			return true;
 		};
 	}

@@ -12,12 +12,18 @@
 <script>
 globscore = 0;
 globlevel=1;
+gameover_check= false;
 function send_score(){
+	  if(!gameover_check){
 		$.get( "/send_tetris_score",{score: globscore, level: globlevel}, function( data ) {
 			$( ".result" ).html( data );
 			console.log("Data Sent");
 		});
 		setTimeout(send_score, 1000);
+	}
+	else{
+		console.log("game over");
+	}
 }
  send_score();
 </script>
