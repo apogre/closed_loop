@@ -1,3 +1,5 @@
+from pixelracer.models import Affectiv, db
+from datetime import datetime
 import socket, sys, time
 
 HOST = 'localhost'
@@ -11,5 +13,13 @@ print 'connected'
 
 while True:
 	data = s.recv(500)
-	print data
+	engagement = 0.5
+	excitementlongterm = 0.5
+	excitementshortterm = 0.5
+	frustration = 0.5
+	meditation = 0.5
+	created = datetime.now()
+	db.session.add(Affectiv(engagement, excitementlongterm,excitementshortterm, frustration, meditation, created=created))
+	db.session.commit()
+	# print data
 	# print '\n'
