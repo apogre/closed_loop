@@ -9,6 +9,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String())
     password = db.Column(db.String())
+    gamedatas = db.relationship('GameData', backref='user', lazy='dynamic')
 
     def __init__(self, username, password):
         self.username = username
@@ -40,3 +41,15 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+class GameData(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    level = db.Column(db.Integer)
+    score = db.Column(db.Integer)
+    stack = db.Column(db.Integer)
+    created = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<GameData %r>' % self.gamedata
+
