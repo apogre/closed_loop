@@ -39,12 +39,12 @@ def send_score(score):
 
 @main.route('/send_tetris_score', methods=['GET'])
 def send_tetris_score():
-    username = request.args.get('user')
+    user_id = request.args.get('user')
     level =  request.args.get('level')
     score = request.args.get('score')
     stack = 5
     created = datetime.now()
-    db.session.add(GameData(level, score, stack, created))
+    db.session.add(GameData(user_id,level, score, stack, created))
     db.session.commit()
     return "done"
 

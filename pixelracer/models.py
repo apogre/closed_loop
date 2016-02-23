@@ -9,8 +9,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String())
     password = db.Column(db.String())
-    gamedatas = db.relationship('GameData', backref='user', lazy='dynamic')
-    affectivs = db.relationship('Affectiv', backref='user', lazy='dynamic')
+   
 
     def __init__(self, username, password):
         self.username = username
@@ -45,13 +44,14 @@ class User(db.Model, UserMixin):
 
 class GameData(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.String)
     level = db.Column(db.Integer)
     score = db.Column(db.Integer)
     stack = db.Column(db.Integer)
     created = db.Column(db.DateTime)
 
-    def __init__(self, level, score, stack, created):
+    def __init__(self, user_id, level, score, stack, created):
+        self.user_id = user_id
         self.level = level
         self.score = score
         self.stack = stack
@@ -62,7 +62,7 @@ class GameData(db.Model):
 
 class Affectiv(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.String)
     engagement = db.Column(db.Float)
     excitementlongterm = db.Column(db.Float)
     excitementshorterm = db.Column(db.Float)
@@ -70,7 +70,8 @@ class Affectiv(db.Model):
     meditation = db.Column(db.Float)
     created = db.Column(db.DateTime)
 
-    def __init__(self, engagement, excitementlongterm, excitementshorterm, frustration,meditation, created):
+    def __init__(self, user_id, engagement, excitementlongterm, excitementshorterm, frustration,meditation, created):
+        self.user_id = user_sid
         self.engagement = engagement
         self.excitementlongterm = excitementlongterm
         self.excitementshorterm = excitementshorterm
