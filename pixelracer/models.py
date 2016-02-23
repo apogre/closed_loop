@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String())
     password = db.Column(db.String())
     gamedatas = db.relationship('GameData', backref='user', lazy='dynamic')
+    affectivs = db.relationship('Affectiv', backref='user', lazy='dynamic')
 
     def __init__(self, username, password):
         self.username = username
@@ -59,3 +60,23 @@ class GameData(db.Model):
     def __repr__(self):
         return '<GameData %r>' % self.gamedata
 
+class Affectiv(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    engagement = db.Column(db.Float)
+    excitementlongterm = db.Column(db.Float)
+    excitementshorterm = db.Column(db.Float)
+    frustration = db.Column(db.Float)
+    meditation = db.Column(db.Float)
+    created = db.Column(db.DateTime)
+
+    def __init__(self, engagement, excitementlongterm, excitementshorterm, frustration,meditation, created):
+        self.engagement = engagement
+        self.excitementlongterm = excitementlongterm
+        self.excitementshorterm = excitementshorterm
+        self.frustration = frustration
+        self.meditation = meditation
+        self.created = created
+
+    def __repr__(self):
+        return '<Affectiv %r>' % self.affectiv
