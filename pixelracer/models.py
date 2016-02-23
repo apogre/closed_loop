@@ -51,7 +51,7 @@ class GameData(db.Model):
     created = db.Column(db.DateTime)
 
     def __init__(self, level, score, stack, created):
-        self.level = username
+        self.level = level
         self.score = score
         self.stack = stack
         self.created = created
