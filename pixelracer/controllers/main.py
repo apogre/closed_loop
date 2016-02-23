@@ -43,7 +43,7 @@ def send_tetris_score():
     score = request.args.get('score')
     stack = 5
     created = datetime.now()
-    db.session.add(level, score, stack, created)
+    db.session.add(GameData(level, score, stack, created))
     db.session.commit()
     return "done"
 
