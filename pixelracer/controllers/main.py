@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, login_required
 
 from pixelracer.extensions import cache
 from pixelracer.forms import LoginForm
-from pixelracer.models import User, GameData
+from pixelracer.models import User, GameData, db
 from datetime import datetime
 
 main = Blueprint('main', __name__)
@@ -43,6 +43,8 @@ def send_tetris_score():
     score = request.args.get('score')
     stack = 5
     created = datetime.now()
+    db.session.add(level, score, stack, created)
+    db.session.commit()
     return "done"
 
 @main.route("/login", methods=["GET", "POST"])
