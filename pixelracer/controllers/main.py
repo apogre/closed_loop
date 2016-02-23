@@ -39,6 +39,7 @@ def send_score(score):
 
 @main.route('/send_tetris_score', methods=['GET'])
 def send_tetris_score():
+    username = request.args.get('user')
     level =  request.args.get('level')
     score = request.args.get('score')
     stack = 5

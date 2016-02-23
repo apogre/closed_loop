@@ -9,24 +9,7 @@
 	<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 </head>
     <script type="text/javascript" src="{{url_for('static', filename='js/jquery-1.10.2.min.js')}}"></script>
-<script>
-globscore = 0;
-globlevel=1;
-gameover_check= false;
-function send_score(){
-	  if(!gameover_check){
-		$.get( "/send_tetris_score",{score: globscore, level: globlevel}, function( data ) {
-			$( ".result" ).html( data );
-			console.log("Data Sent");
-		});
-		setTimeout(send_score, 1000);
-	}
-	else{
-		console.log("game over");
-	}
-}
- send_score();
-</script>
+
 <body>
 <div id="tetris">
 	<canvas id="scene"></canvas>
@@ -51,8 +34,25 @@ function send_score(){
 <script src="{{url_for('static', filename='dist/tetris.js')}}"></script>
 <script>
 	(function(){
+		username = prompt("Enter username", "");
 		var tetris = new Tetris('tetris');
 		tetris.start();
 	})();
+	globscore = 0;
+	globlevel=1;
+	gameover_check= false;
+	function send_score(){
+		  if(!gameover_check){
+			$.get( "/send_tetris_score",{score: globscore, level: globlevel, user: username}, function( data ) {
+				$( ".result" ).html( data );
+				console.log("Data Sent");
+			});
+			setTimeout(send_score, 1000);
+		}
+		else{
+			console.log("game over");
+		}
+	}
+	 send_score();
 </script>
 </html>
