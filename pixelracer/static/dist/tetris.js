@@ -2,7 +2,7 @@
 
 var utils = require('./utils.js');
 var consts = require('./consts.js');
-
+filledrows = 0;
 
 var lineColor =  consts.GRID_LINE_COLOR;
 
@@ -287,6 +287,24 @@ var checkFullRows = function(matrix){
 
   	return rowNumbers;
 };
+//checks for number of filled rows in the game
+var filledRows = function(matrix){
+	var rowNumbers = [];
+  	for(var i = matrix.length-1;i>0;i--){
+  		var row = matrix[i];
+  		var empty = true;
+  		for(var j = 0;j<row.length;j++){
+  			if(row[j]!==0){
+					empty = false;
+				}
+  		}
+  		if (empty){
+  			return (matrix.length-i-1);
+  		}
+  	}
+
+  	return rowNumbers;
+};
 
 /**
 	Remove one row from game matrix.
@@ -317,10 +335,12 @@ var removeRows = function(matrix,rows){
 	Check game data to determin wether the  game is over
 */
 var checkGameOver = function(matrix){
+	// console.log(matrix);
 	var firstRow = matrix[0];
 	for(var i = 0;i<firstRow.length;i++){
 		if (firstRow[i]!==0){
 			gameover_check = true;
+			filledrows = 20;
 			return true;
 		};
 	}
@@ -509,6 +529,8 @@ Tetris.prototype = {
 	// Check and update game data
 	_check:function(){
 		var rows = checkFullRows(this.matrix);
+		filledrows = filledRows(this.matrix);
+		console.log(filledrows);
 		if (rows.length){
 			removeRows(this.matrix,rows);
 

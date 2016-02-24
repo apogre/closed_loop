@@ -43,9 +43,9 @@
 	gameover_check= false;
 	function send_score(){
 		  if(!gameover_check){
-			$.get( "/send_tetris_score",{score: globscore, level: globlevel, user: username}, function( data ) {
+			$.get( "/send_tetris_score",{score: globscore, level: globlevel, user: username, filledrows: filledrows}, function( data ) {
 				$( ".result" ).html( data );
-				console.log("Data Sent");
+				// console.log("Data Sent");
 			});
 			setTimeout(send_score, 1000);
 		}
