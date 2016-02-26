@@ -200,7 +200,7 @@ defaultInterval = 600;
 
 
 // Level update interval
-var levelInterval = 120 * 1000;
+var levelInterval = 60 * 1000;
 
 
 
