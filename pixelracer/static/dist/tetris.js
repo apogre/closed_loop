@@ -414,7 +414,12 @@ Tetris.prototype = {
 	reset:function(){
 		this.running = false;
 		this.isGameOver = false;
-		this.level = 1;
+		if (parseInt(startLevel)===0){
+			this.level=1;
+		}
+		else{
+			this.level=startLevel;
+		}
 		this.score = 0;
 		this.startTime = new Date().getTime();
 		this.currentTime = this.startTime;
@@ -530,7 +535,7 @@ Tetris.prototype = {
 	_check:function(){
 		var rows = checkFullRows(this.matrix);
 		filledrows = filledRows(this.matrix);
-		console.log(filledrows);
+		// console.log(filledrows);
 		if (rows.length){
 			removeRows(this.matrix,rows);
 
@@ -548,7 +553,13 @@ Tetris.prototype = {
 	_checkLevel:function(){
 		var currentTime = new Date().getTime();
 		if (currentTime - this.levelTime > consts.LEVEL_INTERVAL){
-			this.level+=1;
+			if (parseInt(startLevel)===0){
+				this.level+=1;
+			}
+			else{
+				this.level=startLevel;
+			}
+			// this.level+=1;
 			globlevel = this.level;
 			this.interval = calcIntervalByLevel(this.level);
 			views.setLevel(this.level);

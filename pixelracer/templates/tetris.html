@@ -21,7 +21,7 @@
 	</div>
 	<div id="side">
 		<div id="info">
-			<h1 id="levelInfo">Level: <br><span id="level">1</span></h1>
+			<h1 id="levelInfo">Level: <br><span id="level">5</span></h1>
 			<h2 id="scoreInfo">Score: <br><span id="score" >0</span></h2>
 			<div id="rewardInfo" class="invisible">+<span id="reward">0</span></div>
 			<canvas id="preview"></canvas>
@@ -35,6 +35,7 @@
 <script>
 	(function(){
 		username = prompt("Enter username", "");
+		startLevel = prompt("Enter Level(Enter 0 for automated level control)", "");
 		var tetris = new Tetris('tetris');
 		tetris.start();
 	})();
