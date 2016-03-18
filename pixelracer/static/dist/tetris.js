@@ -2,7 +2,7 @@
 
 var utils = require('./utils.js');
 var consts = require('./consts.js');
-filledrows = 0;
+// filledrows = 0;
 
 var lineColor =  consts.GRID_LINE_COLOR;
 
@@ -200,7 +200,7 @@ defaultInterval = 600;
 
 
 // Level update interval
-var levelInterval = 60 * 1000;
+var levelInterval = 10 * 1000;
 
 
 
@@ -288,23 +288,23 @@ var checkFullRows = function(matrix){
   	return rowNumbers;
 };
 //checks for number of filled rows in the game
-var filledRows = function(matrix){
-	var rowNumbers = [];
-  	for(var i = matrix.length-1;i>0;i--){
-  		var row = matrix[i];
-  		var empty = true;
-  		for(var j = 0;j<row.length;j++){
-  			if(row[j]!==0){
-					empty = false;
-				}
-  		}
-  		if (empty){
-  			return (matrix.length-i-1);
-  		}
-  	}
+// var filledRows = function(matrix){
+// 	var rowNumbers = [];
+//   	for(var i = matrix.length-1;i>0;i--){
+//   		var row = matrix[i];
+//   		var empty = true;
+//   		for(var j = 0;j<row.length;j++){
+//   			if(row[j]!==0){
+// 					empty = false;
+// 				}
+//   		}
+//   		if (empty){
+//   			return (matrix.length-i-1);
+//   		}
+//   	}
 
-  	return rowNumbers;
-};
+//   	return rowNumbers;
+// };
 
 /**
 	Remove one row from game matrix.
@@ -340,7 +340,7 @@ var checkGameOver = function(matrix){
 	for(var i = 0;i<firstRow.length;i++){
 		if (firstRow[i]!==0){
 			gameover_check = true;
-			filledrows = 20;
+			// filledrows = 20;
 			return true;
 		};
 	}
@@ -372,6 +372,7 @@ var calcScore = function(rows){
 	Calculate time interval by level, the higher the level,the faster shape moves
 */
 var calcIntervalByLevel = function(level){
+	console.log(consts.DEFAULT_INTERVAL);
 	return consts.DEFAULT_INTERVAL  - (level-1)*60;
 };
 
@@ -395,8 +396,8 @@ Tetris.prototype = {
 	init:function(options){
 
 		var cfg = this.config = utils.extend(options,defaults);
-		this.interval = consts.DEFAULT_INTERVAL;
-
+		this.interval =  (600  - ($("#level_select").val()-1)*60);
+		console.log(this.interval);	
 
 		views.init(this.id, cfg.maxWidth,cfg.maxHeight);
 
@@ -412,6 +413,9 @@ Tetris.prototype = {
 	},
 	//Reset game
 	reset:function(){
+		// console.log(defaultInterval);
+		this._checkLevel();
+
 		this.running = false;
 		this.isGameOver = false;
 		if (parseInt(startLevel)===0){
@@ -534,7 +538,7 @@ Tetris.prototype = {
 	// Check and update game data
 	_check:function(){
 		var rows = checkFullRows(this.matrix);
-		filledrows = filledRows(this.matrix);
+		// filledrows = f(this.matrix);
 		// console.log(filledrows);
 		if (rows.length){
 			removeRows(this.matrix,rows);

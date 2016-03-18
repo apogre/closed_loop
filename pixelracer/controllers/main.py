@@ -12,7 +12,7 @@ speed = 70
 @main.route('/')
 @cache.cached(timeout=1000)
 def home():
-    return render_template('game.html', speed_car=40)
+    return render_template('tetris1.html', speed_car=40)
 
 @main.route('/tetris')
 @cache.cached(timeout=1000)
