@@ -10,16 +10,12 @@ s_add = (HOST, PORT)
 print sys.stderr, 'connecting'
 s.connect(s_add)
 print 'connected'
-
+count == 0
 while True:
-	data = s.recv(500)
-	engagement = 0.5
-	excitementlongterm = 0.5
-	excitementshortterm = 0.5
-	frustration = 0.5
-	meditation = 0.5
-	created = datetime.now()
-	db.session.add(Affectiv(engagement, excitementlongterm,excitementshortterm, frustration, meditation, created=created))
-	db.session.commit()
-	# print data
-	# print '\n'
+	data = s.recv(1000)
+	if "EmotivAffectiv" in data:
+		print data
+		a_split = data.split(';')
+		fr = a_split[8]
+		for i in range()
+		print '\n'
