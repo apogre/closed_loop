@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, request, redirect, url_for
+from flask import Blueprint, render_template, flash, request, redirect, url_for, jsonify
 from flask.ext.login import login_user, logout_user, login_required
 
 from pixelracer.extensions import cache
@@ -23,6 +23,12 @@ def tetris():
 def speed_val():
 	# a = open("speed_val", "rb")
 	return str(speed)
+@main.route('/get_level')
+def level_val():
+    # a = open("speed_val", "r+")
+    b = open("C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val","r+").read()
+    return jsonify(new_level=int(b))
+
 
 @main.route('/send_score/<score>')
 def send_score(score):

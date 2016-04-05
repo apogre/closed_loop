@@ -60,6 +60,7 @@
 		// startLevel = prompt("Enter Level(Enter 0 for automated level control)", "");
 		$( "#start" ).click(function() {
 			startLevel = $("#level_select").val();
+			new_level = 1;
 			username = $("#username").val();
 			$("login_details").hide();
 			$("#tetris").show();
@@ -84,5 +85,14 @@
 		}
 	}
 	 send_score();
+	function get_level(){
+		$.get( "/get_level", function( data ) {
+			new_level = data['new_level'];
+			console.log(new_level);
+		});
+			setTimeout(get_level, 2000);
+
+	}
+	get_level();
 </script>
 </html>
