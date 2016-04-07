@@ -26,7 +26,7 @@ def speed_val():
 @main.route('/get_level')
 def level_val():
     # a = open("speed_val", "r+")
-    b = open("C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val","r+").read()
+    b = open("C:\\Users\\angle\\Desktop\\closed_loop\\pixelracer\\controllers\\level_val","r+").read()
     return jsonify(new_level=int(b))
 
 
