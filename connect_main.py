@@ -3,11 +3,13 @@ from time import sleep
 import sys
 import datetime
 from pixelracer.models import Affectiv, db
-from datetime import datetime
 import socket, sys, time
 
-path = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val"
-path1 = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val_updates"
+# path = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val"
+# path1 = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val_updates"
+
+path = "C:\\Users\\angle\\Desktop\\closed_loop\\pixelracer\\controllers\\level_val"
+path1 = "C:\\Users\\angle\\Desktop\\closed_loop\\pixelracer\\controllers\\level_val_updates"
 
 count = 0
 level_count = 1
@@ -100,7 +102,7 @@ while True:
 					fi.write(str(li+1))
 					fi.close()
 					fp1 = open(path1,"a")
-					fp1.write(str(lp+1)+'\n')
+					fp1.write(str(li+1)+'\n')
 					fp1.close()			
 			level_count = level_count+1
 			count = 0
