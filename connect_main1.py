@@ -5,15 +5,18 @@ import datetime
 from pixelracer.models import Affectiv, db
 import socket, sys, time
 
-path = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val"
-path1 = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val_updates"
+path = "C:\\Users\\angle\\Desktop\\closed_loop\\pixelracer\\controllers\\level_val"
+path1 = "C:\\Users\\angle\\Desktop\\closed_loop\\pixelracer\\controllers\\level_val_updates"
+
+# path = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val"
+# path1 = "C:\\Users\\apradha7\\Downloads\\git2016\\closed_loop\\pixelracer\\controllers\\level_val_updates"
 
 count = 0
 level_count = 1
 hold = 0
 alert_flag = 0
 addon_fr = 0
-
+start_s = 0
 HOST = 'localhost'
 PORT = 8088
 
@@ -29,8 +32,13 @@ while True:
 		a_split = data.split(';')
 		start_time = datetime.datetime.now()
 		# print "start_time==>"+str(start_time)
+		if start_s == 0:
+			fp1 = open(path1,"a")
+			fp1.write('starting================'+'\n')
+			fp1.close()
+			start_s = 1
 		if count == 0:
-			end_time = start_time + datetime.timedelta(seconds=30)
+			end_time = start_time + datetime.timedelta(seconds=60)
 			# print "end_time==>"+str(end_time)
 		if len(a_split) == 10:
 			new_fr = float(a_split[8])
@@ -52,8 +60,8 @@ while True:
 					if level_count != 2:
 						new_frustration = new_frustration1
 					new_frustration1 = old_fr/count
-				print "new_frustration==>" + str(new_frustration)	
-				print "new_frustration1-==>" + str(new_frustration1)
+				# print "new_frustration==>" + str(new_frustration)	
+				# print "new_frustration1-==>" + str(new_frustration1)
 				fp1 = open(path1,"a")
 				fp1.write(str(new_frustration)+'  '+str(new_frustration1)+'\n')
 				fp1.close()
